@@ -1,5 +1,4 @@
 package entities;
-import java.util.Date;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -23,7 +22,7 @@ public class Inscription {
     private Long frais;
 
     @Column()
-    private Date dateInscription;
+    private int dateInscription;
 
     @ManyToOne
     @JoinColumn(name="idUtilisateur")
@@ -37,7 +36,7 @@ public class Inscription {
 
     }
 
-    public int getIdinscription(){
+    public int getIdInscription(){
         return idInscription;
     }
 
@@ -45,7 +44,7 @@ public class Inscription {
         return frais;
     }
 
-    public Date getDateInscription(){
+    public int getDateInscription(){
         return dateInscription;
     }
 
@@ -54,9 +53,23 @@ public class Inscription {
         return utilisateur;
     }
 
+
     public void setUtilisateur(Utilisateur utilisateur) {
         this.utilisateur = utilisateur;
     }
+
+    public void setIdInscription(int idInscription) {
+        this.idInscription = idInscription;
+    }
+
+    public void setFrais(Long frais) {
+        this.frais = frais;
+    }
+    public void setDateInscription(int dateInscription) {
+        this.dateInscription = dateInscription;
+    }
+
+
 
     // Getter and setter for Formation
     public Formation getFormation() {

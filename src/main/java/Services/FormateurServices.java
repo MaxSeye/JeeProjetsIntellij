@@ -1,17 +1,23 @@
 package Services;
 
 import daos.FormateurDaos;
+import entities.Formateur;
 
 import java.util.List;
 
 public interface FormateurServices {
     FormateurDaos createFormateur(FormateurDaos formateur);
-    boolean getFrmateur(int idFormateur);
+
 
     List<FormateurDaos> getAllFormateurs();
 
+    boolean getFormateur(int idFormateur);
+
+
     FormateurDaos updateFormateur(int idFormateur, FormateurDaos formateur);
 
-    FormateurDaos deleteFormateur(int idFormateur);
+
+
+    Formateur deleteFormateur(int idFormateur);
 
 }

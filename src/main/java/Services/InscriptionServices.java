@@ -1,7 +1,5 @@
 package Services;
 
-import daos.FormateurDaos;
-import daos.FormationDaos;
 import daos.InscriptionDaos;
 
 import java.util.List;
@@ -15,7 +13,7 @@ public interface InscriptionServices {
 
     InscriptionDaos updateInscriptions(int idInscription, InscriptionDaos inscription);
 
-    InscriptionDaos deleteInscription(int idInscription);
+    boolean deleteInscription(int idInscription);
 
 }
 

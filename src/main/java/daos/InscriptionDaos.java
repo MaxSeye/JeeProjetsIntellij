@@ -22,12 +22,12 @@ public class InscriptionDaos {
             sequenceName="INSCRIPTION_ID_SEQ",
             allocationSize=1
     )
-    private int idInscription;
+    private static int idInscription;
     @Column()
-    private Long frais;
+    private static Long frais;
 
     @Column()
-    private Date dateInscription;
+    private int dateInscription;
 
     @ManyToOne
     @JoinColumn(name="idUtilisateur")
@@ -41,15 +41,17 @@ public class InscriptionDaos {
 
     }
 
-    public int getIdinscription(){
-        return idInscription;
-    }
 
-    public Long getFrais(){
+    public static Long getFrais(){
         return frais;
     }
 
-    public Date getDateInscription(){
+    public static int getIdInscription() {
+        return idInscription;
+
+    }
+
+    public int getDateInscription(){
         return dateInscription;
     }
 
@@ -69,6 +71,18 @@ public class InscriptionDaos {
 
     public void setFormation(Formation formation) {
         this.formation = formation;
+    }
+
+    public void setIdInscription(int idInscription) {
+        this.idInscription=idInscription;
+    }
+
+    public void setFrais(Long frais) {
+        this.frais=frais;
+    }
+
+    public void setDateInscription(int dateInscription) {
+        this.dateInscription=dateInscription;
     }
 }
 

@@ -14,7 +14,7 @@ public interface UtilisateurServices {
 
     UtilisateurDaos updateUtilisateur(int idUtilisateur, UtilisateurDaos utilisateur);
 
-    UtilisateurDaos deleteUtilisateur(int idUtilisateur);
+    boolean deleteUtilisateur(int idUtilisateur);
 
 
 }

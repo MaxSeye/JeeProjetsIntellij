@@ -1,6 +1,7 @@
 package Services;
 
 import daos.CentreDaos;
+import entities.Centre;
 
 import java.util.List;
 
@@ -12,6 +13,6 @@ public interface CentreServices {
 
         CentreDaos updateCentre(int idCentre, CentreDaos centre);
 
-        CentreDaos deleteCentre(int idCentre);
+        Centre deleteCentre(int idCentre);
 
 }

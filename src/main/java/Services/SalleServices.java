@@ -13,6 +13,6 @@ public interface SalleServices {
 
     SalleDaos updateSalle(int idSalle, SalleDaos salle);
 
-    SalleDaos deleteSalle(int idSalle);
+    boolean deleteSalle(int idSalle);
 
 }
