@@ -7,7 +7,7 @@ import java.util.List;
 public interface InscriptionServices {
     InscriptionDaos createInscription(InscriptionDaos inscription);
 
-    boolean getInscription(int idInscription);
+    InscriptionDaos getInscription(int idInscription);
 
     List<InscriptionDaos> getAllInscriptions();
 

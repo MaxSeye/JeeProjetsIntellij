@@ -8,7 +8,7 @@ public interface UtilisateurServices {
 
     UtilisateurDaos createUtilisateur(UtilisateurDaos utilisateur);
 
-    boolean getUtilisateur(int idUtiliateur);
+    UtilisateurDaos getUtilisateur(int idUtiliateur);
 
     List<UtilisateurDaos> getAllUtilisateur();
 

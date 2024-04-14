@@ -2,12 +2,16 @@ package Services.servicesImpl;
 
 import Repositories.UtilisateurRepositories;
 import Services.UtilisateurServices;
+import daos.CentreDaos;
 import daos.InscriptionDaos;
 import daos.UtilisateurDaos;
+import entities.Centre;
+import entities.Formateur;
 import entities.Inscription;
 import entities.Utilisateur;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import utils.ObjectMapperUtils;
 
 import java.util.List;
 import java.util.Optional;
@@ -19,38 +23,18 @@ public class UtilisateurServicesImpl implements UtilisateurServices {
     @Autowired
     UtilisateurRepositories utilisateurRepositories;
     @Override
-    public UtilisateurDaos createUtilisateur(UtilisateurDaos utilisateurDaos) {
-        // Créer un nouvel objet Centre à partir de l'objet CentreDaos
-        Utilisateur newUtilisateur= new Utilisateur();
-        // Affecter les valeurs appropriées depuis centreDaos à newCentre
-        newUtilisateur.setIdUtilisateur(utilisateurDaos.getIdUtilisateur()); // Par exemple, si le nom est une propriété de Centre
-        newUtilisateur.setNomUtilisateur(utilisateurDaos.getNomUtilisateur()); // Assurez-vous d'adapter cela à votre modèle Centre
-        newUtilisateur.setMotDePasse(utilisateurDaos.getMotDePasse());
-        newUtilisateur.setRole(utilisateurDaos.getRole());
 
-
-        // Enregistrer le nouveau centre dans la base de données en utilisant le repository
-        Utilisateur savedUtilisateur = utilisateurRepositories.save(newUtilisateur);
-
-        // Vous pouvez mapper savedCentre à un objet CentreDaos si nécessaire
-        UtilisateurDaos savedUtilisateurDaos = new UtilisateurDaos();
-
-        savedUtilisateurDaos.setIdUtilisateur(savedUtilisateur.getIdUtilisateur()); // Assurez-vous d'adapter cela à votre modèle CentreDaos
-        savedUtilisateurDaos.setNomUtilisateur(savedUtilisateur.getNomUtilisateur()); // Assurez-vous d'adapter cela à votre modèle CentreDaos
-        savedUtilisateurDaos.setMotDePasse(savedUtilisateur.getMotDePasse()); // Assurez-vous d'adapter cela à votre modèle CentreDaos
-        savedUtilisateurDaos.setRole(savedUtilisateur.getRole()); // Assurez-vous d'adapter cela à votre modèle CentreDaos
-
-
-        return savedUtilisateurDaos; // Retourner le centre nouvellement créé
+    public UtilisateurDaos createUtilisateur(UtilisateurDaos utilisateur) {
+        Utilisateur addedUtilisateur = utilisateurRepositories.save(ObjectMapperUtils.map(utilisateur, Utilisateur.class));
+        return ObjectMapperUtils.map(addedUtilisateur, UtilisateurDaos.class);
     }
 
     @Override
-    public boolean getUtilisateur(int idUtiliateur) {
-        Optional<Utilisateur> searchedUtilisateur = utilisateurRepositories.findById(idUtiliateur);
-        if(searchedUtilisateur.isPresent()) {
-            return true;
-        }
-        return false;
+    public UtilisateurDaos getUtilisateur(int idUtilisateur) {
+        Optional<Utilisateur> searchedUtilisateur = utilisateurRepositories.findById(idUtilisateur    );
+
+        if(searchedUtilisateur.isEmpty()) return null;
+        return ObjectMapperUtils.map(searchedUtilisateur.get(), UtilisateurDaos.class);
     }
 
     @Override
@@ -73,12 +57,11 @@ public class UtilisateurServicesImpl implements UtilisateurServices {
     }
 
     @Override
-    public boolean deleteUtilisateur(int idUtilisateur) {
-        Optional<Utilisateur> searchedUtilisateur = utilisateurRepositories.findById(idUtilisateur);
-        if(searchedUtilisateur.isPresent()) {
-            utilisateurRepositories.delete(searchedUtilisateur.get());
-            return true;
-        }
-        return false;
+    public boolean deleteUtilisateur(int IdUtilisateur) {
+        Optional<Utilisateur> searchedUtilisateur = utilisateurRepositories.findById(IdUtilisateur);
+
+        if(searchedUtilisateur.isEmpty()) return false;
+        utilisateurRepositories.delete(searchedUtilisateur.get());
+        return true;
     }
 }

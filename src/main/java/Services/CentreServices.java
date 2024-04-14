@@ -7,12 +7,12 @@ import java.util.List;
 
 public interface CentreServices {
         CentreDaos createCentre(CentreDaos centre);
-        boolean getCentre(int idCentre);
+        CentreDaos getCentre(int idCentre);
 
         List<CentreDaos> getAllCentres();
 
         CentreDaos updateCentre(int idCentre, CentreDaos centre);
 
-        Centre deleteCentre(int idCentre);
+        boolean deleteCentre(int idCentre);
 
 }

@@ -4,10 +4,12 @@ import Repositories.InscriptionRepositories;
 import Services.InscriptionServices;
 import daos.FormationDaos;
 import daos.InscriptionDaos;
+import entities.Formateur;
 import entities.Formation;
 import entities.Inscription;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import utils.ObjectMapperUtils;
 
 import java.util.List;
 import java.util.Optional;
@@ -22,37 +24,17 @@ public class InscriptionServicesImpl implements InscriptionServices {
     InscriptionRepositories inscriptionRepositories;
 
     @Override
-    public InscriptionDaos createInscription(InscriptionDaos inscriptionDaos) {
-        // Créer un nouvel objet Centre à partir de l'objet CentreDaos
-        Inscription newInscription= new Inscription();
-        // Affecter les valeurs appropriées depuis centreDaos à newCentre
-        newInscription.setIdInscription(inscriptionDaos.getIdInscription()); // Par exemple, si le nom est une propriété de Centre
-        newInscription.setFrais(inscriptionDaos.getFrais()); // Assurez-vous d'adapter cela à votre modèle Centre
-        newInscription.setDateInscription(inscriptionDaos.getDateInscription());
-
-
-
-        // Enregistrer le nouveau centre dans la base de données en utilisant le repository
-        Inscription savedInscription = inscriptionRepositories.save(newInscription);
-
-        // Vous pouvez mapper savedCentre à un objet CentreDaos si nécessaire
-        InscriptionDaos savedInscriptionDaos = new InscriptionDaos();
-
-        savedInscriptionDaos.setIdInscription(savedInscription.getIdInscription()); // Assurez-vous d'adapter cela à votre modèle CentreDaos
-        savedInscriptionDaos.setFrais(savedInscription.getFrais()); // Assurez-vous d'adapter cela à votre modèle CentreDaos
-        savedInscriptionDaos.setDateInscription(savedInscription.getDateInscription()); // Assurez-vous d'adapter cela à votre modèle CentreDaos
-
-
-        return savedInscriptionDaos; // Retourner le centre nouvellement créé
+    public InscriptionDaos createInscription(InscriptionDaos inscription) {
+        Inscription addedInscription = inscriptionRepositories.save(ObjectMapperUtils.map(inscription, Inscription.class));
+        return ObjectMapperUtils.map(addedInscription, InscriptionDaos.class);
     }
 
     @Override
-    public boolean getInscription(int idInscription) {
-        Optional<Inscription> searchedInscription = inscriptionRepositories.findById(idInscription);
-        if(searchedInscription.isPresent()) {
-            return true;
-        }
-        return false;
+    public InscriptionDaos getInscription(int idInscription) {
+        Optional<Inscription> searchedInscription= inscriptionRepositories.findById(idInscription);
+
+        if(searchedInscription.isEmpty()) return null;
+        return ObjectMapperUtils.map(searchedInscription.get(), InscriptionDaos.class);
     }
 
     @Override
@@ -73,12 +55,11 @@ public class InscriptionServicesImpl implements InscriptionServices {
     }
 
     @Override
-    public boolean deleteInscription(int idInscription) {
-        Optional<Inscription> searchedInscription = inscriptionRepositories.findById(idInscription);
-        if(searchedInscription.isPresent()) {
-            inscriptionRepositories.delete(searchedInscription.get());
-            return true;
-        }
-        return false;
+    public boolean deleteInscription(int IdInscription) {
+        Optional<Inscription> searchedInscription = inscriptionRepositories.findById(IdInscription);
+
+        if(searchedInscription.isEmpty()) return false;
+        inscriptionRepositories.delete(searchedInscription.get());
+        return true;
     }
 }

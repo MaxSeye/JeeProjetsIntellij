@@ -11,13 +11,13 @@ public interface FormateurServices {
 
     List<FormateurDaos> getAllFormateurs();
 
-    boolean getFormateur(int idFormateur);
+    FormateurDaos getFormateur(int idFormateur);
 
 
     FormateurDaos updateFormateur(int idFormateur, FormateurDaos formateur);
 
 
 
-    Formateur deleteFormateur(int idFormateur);
+    boolean deleteFormateur(int idFormateur);
 
 }

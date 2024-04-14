@@ -7,7 +7,7 @@ import java.util.List;
 public interface SalleServices {
     SalleDaos createSalle(SalleDaos salle);
 
-    boolean getSalle(int idSalle);
+    SalleDaos getSalle(int idSalle);
 
     List<SalleDaos> getAllSalles();
 
