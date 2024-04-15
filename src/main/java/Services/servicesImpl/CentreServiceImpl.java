@@ -47,16 +47,14 @@ public class CentreServiceImpl implements CentreServices {
     @Override
     public List<CentreDaos> getAllCentres() {
         List<Centre> centreList = centreRepositories.findAll();
-        return centreList.stream()
-                .map(centre -> new CentreDaos())
-                .collect(Collectors.toList());
+        return ObjectMapperUtils.mapAll(centreList, CentreDaos.class);
     }
 
     @Override
     public CentreDaos updateCentre(int idCentre, CentreDaos centre) {
         if(centreRepositories.existsById(idCentre)) {
-
-            return centre;
+            Centre updatedcentre = centreRepositories.save(ObjectMapperUtils.map(centre, Centre.class));
+            return ObjectMapperUtils.map(updatedcentre, CentreDaos.class);
         }
         return null;
     }
